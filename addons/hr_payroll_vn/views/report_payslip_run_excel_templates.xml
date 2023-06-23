@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_payslip_run_excel" model="xlsx.template">
+        <field name="res_model">hr.payslip.run</field>
+        <field name="fname">payslip_run_form.xlsx</field>
+        <field name="name">Payslips Batch Template</field>
+        <field name="input_instruction">
+            { 
+                '__EXPORT__': {
+                    'payslip_run': {
+                        '_HEAD_': {
+                            'B2': '${env.user.company_id.partner_id.name}#{align=middle_vertical;font=times_new_roman;style=text}',
+                        },
+                        'slip_ids': {
+                            'B6': '${"=ROW()-5"}#{align=middle_vertical;align=center;font=times_new_roman;style=text}',
+                            'C6': 'employee_id.identification_id${value or ""}#{align=middle_vertical;align=center;font=times_new_roman;style=text}',
+                            'D6': 'employee_id.name${value or ""}#{align=middle_vertical;font=times_new_roman;style=text}',
+                            'E6': 'net_wage${value or 0}@{sum}#{align=middle_vertical;font=times_new_roman;style=number}',
+                        }
+                    }
+                },
+            }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('report_payslip_run_excel')]"/>
+    </function>
+
+</odoo>

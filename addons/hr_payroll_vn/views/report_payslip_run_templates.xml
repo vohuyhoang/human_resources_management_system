@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payslip_run">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <p class="mr16" style="text-align: center;">
+                            <h2>DANH SÁCH CBNV NHẬN LƯƠNG</h2>
+                            <p t-field="o.name"/>
+                        </p>
+
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã NV</th>
+                                    <th>TÊN NV</th>
+                                    <th>SỐ TIỀN</th>
+                                    <th>KÝ NHẬN</th>
+                                    <th>GHI CHÚ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="current_subtotal" t-value="0"/>
+                                <tr t-foreach="o.slip_ids" t-as="line">
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.net_wage"/>
+                                    <t t-set="line_index" t-value="line_index + 1"/>
+                                    <td style="text-align: center;">
+                                        <span t-esc="line_index"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.employee_id.identification_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.employee_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.net_wage"
+                                              t-options='{"widget": "monetary", "display_currency": line.currency_id}'/>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="clearfix">
+                            <div id="total" class="row">
+                                <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                                    <table class="table table-sm" style="page-break-inside: avoid;">
+                                        <tr class="border-black o_subtotal" style="">
+                                            <td>
+                                                <strong>TỔNG</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="current_subtotal"
+                                                      t-options='{"widget": "monetary", "display_currency": o.slip_ids[0].currency_id}'/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-right">
+                            <strong>NGƯỜI LẬP BẢNG</strong>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
