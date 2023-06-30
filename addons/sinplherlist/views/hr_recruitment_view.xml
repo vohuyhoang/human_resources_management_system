@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_applicant_view_id_inherit_module_name" model="ir.ui.view">
+        <field name="name">hr.applicant.view.form.inherit</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="Skills" />
+            </xpath>
+            
+        </field>
+    </record>
+
+    
+    <report
+        id="report_mypdf"
+        string="Recrruitment Report"
+        model="hr.applicant"
+        report_type="qweb-pdf"
+        name="hr_rectuitment_manager.hr_leave_report_mypdf"
+        file="hr_recruitment_manager.hr_leave_report_mypdf"
+        attachment_use="True"
+    />
+
+ <report
+        id="report_mypdf"
+        string="My PDF Report"
+        model="hr.leave"
+        report_type="qweb-pdf"
+        name="hr_recruiment_manager.hr_recruitment_report_mypdf"
+        file="hr_recruiment_manager.hr_recruitment_report_mypdf"
+        attachment_use="True"
+    />
+
+
+    <!-- Định nghĩa template cho báo cáo -->
+    <template id="hr_recruitment_report_mypdf">
+        <main>
+            <div class="header">
+                <!-- Định dạng và hiển thị logo -->
+                <div class="logo">
+                    <img src="/my_leave_manager/static/img/logo.png"
+                        style="width: 100px; height: auto;" alt="Logo" />
+                </div>
+                <!-- Hiển thị tiêu đề -->
+                <div class="title" style="text-align: center;font-family: Arial, Helvetica, sans-serif;">
+                    <h1>Thống Kê Đăng Ký Nghỉ Phép</h1>
+                </div>
+            </div>
+            <div class="content">
+                <!-- Hiển thị bảng dữ liệu -->
+                <table id="customers">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Nhân Viên</th>
+                            <th>Phòng Ban</th>
+                            <th>Diễn giải</th>
+                            <th>Số Ngày</th>
+                            <th>Ngày Bắt Đầu</th>
+                            <th>Ngày Kết Thúc</th>
+                            <th>Loại Nghỉ Phép</th>
+                            <th>Trạng Thái</th>
+                        </tr>
+                    </thead>
+                    <!-- <tbody>
+                        <t t-set="counter" t-value="1" />
+                        <t t-foreach="docs" t-as="doc">
+                            <tr>
+                                <td>
+                                    <t t-esc="counter" />
+                                </td>
+                                <td>
+                        <t t-esc="doc.employee_id.name" />
+                                </td>
+                                <td>
+                                    <t t-esc="doc.employee_id.department_id.name" />
+                                </td>
+                                <td>
+                                    <t t-esc="doc.name" />
+                                </td>
+                                <td>
+                                    <t t-esc="doc.duration_display" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.date_from" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.date_to" />
+                                </td>
+                                <td>
+                                    <t t-esc="doc.holiday_status_id.name" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.state" />
+                                </td>
+                                <t t-set="counter" t-value="counter + 1" />
+                            </tr>
+                        </t>
+                    </tbody> -->
+                </table>
+            </div>
+
+            <style>
+                #customers {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                }
+
+                #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+                }
+
+                #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+                #customers tr:hover {background-color: #ddd;}
+
+                #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #04AA6D;
+                color: white;
+                }
+            </style>
+        </main>
+
+    </template>
+
+</odoo>
