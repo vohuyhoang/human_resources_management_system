@@ -1,0 +1,191 @@
+<odoo>
+
+    <record id="hr_holidays.menu_hr_holidays_report" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+
+    <record id="hr_holidays.menu_hr_holidays_dashboard" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+
+    <record id="hr_holidays.hr_holidays_menu_manager_approve_allocations" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+
+    <record id="hr_holidays.menu_open_allocation" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+
+    <record id="hr_holidays.hr_holidays_menu_manager_all_allocations" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+
+    <record id="hr_holidays.hr_holidays_menu_manager_payroll_to_report" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+
+
+    <report
+        id="report_mypdf"
+        string="Leave Report"
+        model="hr.leave"
+        report_type="qweb-pdf"
+        name="my_leave_manager.hr_leave_report_mypdf"
+        file="my_leave_manager.hr_leave_report_mypdf"
+        attachment_use="True"
+    />
+
+    <report id="report_mypdf_excel"
+        model="hr.leave"
+        string="Leave Report (Excel)"
+        report_type="excel"
+        name="leave_form.xlsx"
+        file="my_leave_manager.report_leave_excel"
+        print_report_name="object.name"
+    />
+
+
+    <!-- Định nghĩa template cho báo cáo -->
+    <template id="hr_leave_report_mypdf">
+        <main>
+            <div class="header">
+                <!-- Định dạng và hiển thị logo -->
+                <div class="logo">
+                    <img src="/my_leave_manager/static/img/logo.png"
+                        style="width: 100px; height: auto;" alt="Logo" />
+                </div>
+                <!-- Hiển thị tiêu đề -->
+                <div class="title"
+                    style="text-align: center;font-family: Arial, Helvetica, sans-serif;">
+                    <h1>Thống Kê Đăng Ký Nghỉ Phép</h1>
+                </div>
+            </div>
+            <div class="content">
+                <!-- Hiển thị bảng dữ liệu -->
+                <table id="customers">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Nhân Viên</th>
+                            <th>Phòng Ban</th>
+                            <th>Diễn giải</th>
+                            <th>Số Ngày</th>
+                            <th>Ngày Bắt Đầu</th>
+                            <th>Ngày Kết Thúc</th>
+                            <th>Loại Nghỉ Phép</th>
+                            <th>Trạng Thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="counter" t-value="1" />
+                        <t t-foreach="docs" t-as="doc">
+                            <tr>
+                                <td>
+                                    <t t-esc="counter" />
+                                </td>
+                                <td>
+                                    <t t-esc="doc.employee_id.name" />
+                                </td>
+                                <td>
+                                    <t t-esc="doc.employee_id.department_id.name" />
+                                </td>
+                                <td>
+                                    <t t-esc="doc.name" />
+                                </td>
+                                <td>
+                                    <t t-esc="doc.duration_display" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.date_from" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.date_to" />
+                                </td>
+                                <td>
+                                    <t t-esc="doc.holiday_status_id.name" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.state" />
+                                </td>
+                                <t t-set="counter" t-value="counter + 1" />
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+
+            <style>
+                #customers {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                }
+
+                #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+                }
+
+                #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+                #customers tr:hover {background-color: #ddd;}
+
+                #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #04AA6D;
+                color: white;
+                }
+            </style>
+        </main>
+
+    </template>
+
+    <record id="report_leave_excel" model="xlsx.template">
+        <field name="res_model">hr.leave</field>
+        <field name="fname">leave_form.xlsx</field>
+        <field name="name">Leave Template</field>
+        <field name="input_instruction">
+            { 
+                '__EXPORT__': {
+                    'leave': {
+                        '_HEAD_': {
+                            'B2': '${env.user.company_id.partner_id.name}#{style=text}',
+                        },
+                        'linked_request_ids': {
+                            'C6': 'employee_id${value or "test"}#{style=text}',
+                            'D6': 'employee_id.name${value or ""}#{style=text}',
+                        }
+                    }
+                },
+            }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('report_leave_excel')]"/>
+    </function>
+
+
+    <!-- <record id="action_report_mypdf" model="ir.actions.act_window">
+        <field name="name">My PDF Report</field>
+        <field name="type">ir.actions.act_url</field>
+        <field name="res_model">hr.leave</field>
+        <field name="url">my_leave_manager.report_mypdf</field>
+        <field name="target">new</field>
+        <field name="groups"
+            eval="[(6, 0, [ref('hr_holidays.group_hr_holidays_manager'),
+    ref('hr_holidays.group_hr_holidays_user')])]" />
+    </record> -->
+
+
+    <menuitem
+        id="menu_hr_holidays_report_test"
+        name="Reporting"
+        parent="hr_holidays.menu_hr_holidays_root"
+        sequence="99"
+        action="hr_holidays.hr_leave_action_all"
+        groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user" />
+
+</odoo>
