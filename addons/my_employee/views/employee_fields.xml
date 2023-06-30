@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record model="ir.model.fields" id="field_custom_relation_type">
+            <field name="name">x_custom_relation_type</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="field_description">x_custom_relation_type</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="False"/>
+            <field name="index" eval="False"/>
+        </record>
+
+
+    </data>
+</odoo>

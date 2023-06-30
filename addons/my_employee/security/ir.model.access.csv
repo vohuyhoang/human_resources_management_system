@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_relationship,Access HR Relationship,model_hr_relationship,base.group_user,1,1,1,1
+access_medical_record,Access Medical Record,model_medical_record,base.group_user,1,1,1,1
+access_hr_employee_labor_contract,Access to Labor Contract,model_hr_employee,base.group_user,1,0,0,0
+access_hr_employee_appendix_contract,Access to Appendix Contract,model_hr_employee,base.group_user,1,0,0,0
+access_hr_employee_salary_adjustment,Access to Salary Adjustment,model_hr_employee,base.group_user,1,0,0,0
+access_employee_report,Employee Report,model_employee_report,base.group_user,1,1,1,0
+access_employee_report,model_employee_report.model_employee_report,model_employee_report,base.group_user,1,0,0,0

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="report_employee_excel" model="xlsx.template">
+        <field name="res_model">hr.employee</field>
+        <field name="fname">my_employee.xlsx</field>
+        <field name="name">employee Batch Template</field>
+        <field name="input_instruction">
+            { 
+                '__EXPORT__': {
+                    'NHANVIEN': {
+                        'slip_ids': {
+                            <!-- 'A2': 'employee_id.name${value or ""}#{align=middle_vertical;font=times_new_roman;style=text}',
+                            'B2': 'employee_id.name${value or ""}#{align=middle_vertical;font=times_new_roman;style=text}',
+                            'C2': 'employee_id.name${value or ""}#{align=middle_vertical;font=times_new_roman;style=text}',
+                            'D2': 'employee_id.name${value or ""}#{align=middle_vertical;font=times_new_roman;style=text}', -->
+                        }
+                    }   
+                }
+            }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('report_employee_excel')]"/>
+    </function>
+
+    
+
+        <!-- <report
+                id="action_report_employee"
+                model="hr.employee"
+                string="employee Batch"
+                report_type="qweb-pdf"
+                name="my_employee.report_employee"
+                file="my_employee.report_employee"
+                print_report_name="object.name"
+        /> -->
+
+        <report id="report_employee_excel"
+                model="hr.employee"
+                string="employee Batch execl"
+                report_type="excel"
+                name="my_employee.xlsx"
+                file="my_employee.report_employee_excel"
+                print_report_name="object.name"
+        />
+
+    </data>
+
+</odoo>

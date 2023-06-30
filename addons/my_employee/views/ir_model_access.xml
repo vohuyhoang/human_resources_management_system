@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Quyền truy cập cho mô hình hr.employee -->
+        <record id="access_hr_employee_manager" model="ir.model.access">
+            <field name="name">Quyền truy cập quản lý Nhân viên</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <!-- <field name="group_id" ref="base.group_hr_manager"/> -->
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+        <!-- Các quyền truy cập khác (nếu cần) -->
+
+    </data>
+</odoo>

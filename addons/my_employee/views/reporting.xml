@@ -1,0 +1,114 @@
+<odoo>
+<record id="employee_report_action" model="ir.actions.report">
+        <field name="name">Báo cáo nhân viên</field>
+        <field name="model">hr.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">my_employee.report_employee</field>
+        <field name="file">my_employee.report_employee</field>
+    </record>
+
+    <template id="report_employee">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                    <main>
+                        <h1>Báo cáo nhân viên</h1>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Họ tên</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Trình độ</th>
+                                    <th>Chuyên ngành</th>
+                                    <th>Bộ phận</th>
+                                    <th>Số sổ BHXH</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-esc="doc.name"/></td>
+                                    <td><span t-esc="doc.birthday"/></td>
+                                    <td><span t-esc="doc.certificate"/></td>
+                                    <td><span t-esc="doc.study_field"/></td>
+                                    <td><span t-esc="doc.department_id.name"/></td>
+                                    <td><span t-esc="doc.medical_record_ids.bhxh"/></td>
+                                    <td><span t-esc="doc.additional_note"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report
+        id="report_employee"
+        string="My PDF Report"
+        model="hr.employee"
+        report_type="qweb-pdf"
+        name="my_employee.report_employee"
+        file="my_employee.report_employee"
+        attachment_use="True"
+    />
+
+    <menuitem id="menu_employee_report" name="Báo cáo nhân viên" parent="hr.menu_hr_root" sequence="20"/>
+    <menuitem id="menu_employee_report_list" name="Danh sách báo cáo nhân viên" parent="menu_employee_report" action="employee_report_action" sequence="10"/>
+
+    <record id="report_employee_list" model="ir.actions.report">
+        <field name="name">Employee List</field>
+        <field name="model">hr.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">my_employee.report_employee_list</field>
+        <field name="file">my_employee.report_employee_list</field>
+        <field name="model">hr.employee,date_start</field>
+
+        <field name="print_report_name">"Danh sách nhân viên"</field>
+        <field name="report_rml">my_employee.report_employee_list</field>
+        <field name="attachment_use">True</field>
+    </record>
+
+    <template id="report_employee_list">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                <main>
+                    <h2>Danh sách nhân viên</h2>
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Họ tên</th>
+                                <th>Ngày sinh</th>
+                                <th>Phòng ban</th>
+                                <th>Chức vụ</th>
+                                <th>Ngày bắt đầu làm việc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span t-esc="o.name"/></td>
+                                <td><span t-esc="o.birthday"/></td>
+                                <td><span t-esc="o.department_id.name"/></td>
+                                <td><span t-esc="o.job_title"/></td>
+                                <td><span t-esc="o.contract.date_start"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </main>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <report
+        id="report_employee_list"
+        string="My PDF Report1"
+        model="hr.employee"
+        report_type="qweb-pdf"
+        name="my_employee.report_employee_list"
+        file="my_employee.report_employee_list"
+        attachment_use="True"
+    />
+</odoo>
