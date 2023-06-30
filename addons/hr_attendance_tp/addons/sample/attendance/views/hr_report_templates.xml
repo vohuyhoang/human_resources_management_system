@@ -1,0 +1,189 @@
+<odoo>
+    <template id="hr_attendance_report_templates">
+        <main>
+            <div class="header">
+                <!-- Định dạng và hiển thị logo -->
+                <div class="logo">
+                    <img src="/attendance/static/description/logo.png"
+                        style="width: 100px; height: auto;" alt="Logo" />
+                </div>
+                <!-- Hiển thị tiêu đề -->
+                <div class="title"
+                    style="text-align: center;font-family: Arial, Helvetica, sans-serif;">
+                    <h4>BÁO CÁO THỜI GIAN VÀO/RA</h4>
+                </div>
+            </div>
+
+
+            <div class="title" style=" font-family: Arial, Helvetica, sans-serif;">
+                <span>Nhân viên:</span>
+                <t t-set="displayed_names" t-value="[]" />
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="employee_name" t-value="doc.employee_id.name" />
+                    <t t-if="not employee_name in displayed_names">
+                        <t t-esc="employee_name" />
+                        <t t-set="displayed_names" t-value="displayed_names + [employee_name]" />
+                    </t>
+                </t>
+
+                <br></br>
+                <span>Phòng ban:</span>
+                <t t-set="displayed_departments" t-value="[]" />
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="department_name" t-value="doc.employee_id.department_id.name" />
+                    <t t-if="not department_name in displayed_departments">
+                        <t t-esc="department_name" />
+                        <t t-set="displayed_departments"
+                            t-value="displayed_departments + [department_name]" />
+                    </t>
+                </t>
+
+                <br></br>
+                <span>Chức vụ:</span>
+                <t t-set="displayed_job_titles" t-value="[]" />
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="job_title" t-value="doc.employee_id.job_title" />
+                    <t t-if="not job_title in displayed_job_titles">
+                        <t t-esc="job_title" />
+                        <t t-set="displayed_job_titles" t-value="displayed_job_titles + [job_title]" />
+                    </t>
+                </t>
+
+
+            </div>
+
+
+            <div class="content">
+                <table id="customers">
+                    <thead>
+                        <tr>
+                            <th>Thứ trong tuần</th>
+                            <th>Ngày giờ vào</th>
+                            <th>Ngày giờ ra</th>
+                            <th>Đi trễ</th>
+                            <th>Về sớm</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs" t-as="doc">
+                            <tr>
+                                <td>
+                                    <t t-esc="doc.day_of_week" />
+                                </td>
+
+                                <td>
+                                    <span t-field="doc.check_in" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.check_out" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.late_minutes" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.early_minutes" />
+                                </td>
+
+                                <!-- <td>
+                                                <t t-esc="doc.duration_display" />
+                                            </td>
+                                            <td>
+                                                <t t-esc="doc.date_from" />
+                                            </td>
+                                            <td>
+                                                <t t-esc="doc.date_to" />
+                                            </td>
+                                            <td>
+                                                <t t-esc="doc.holiday_status_id.name" />
+                                            </td>
+                                            <td>
+                                                <t t-esc="doc.state" />
+                                            </td> -->
+
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: right;margin:10px 50px 0 0">
+                <span style="margin-right:45px">Tổng cộng</span>
+                <span style="margin: 0 75px">
+                    <t t-set="displayed_names" t-value="[]" />
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-set="name" t-value="doc.employee_id.name" />
+                        <t t-if="not name in displayed_names">
+                            <t t-esc="doc.total_late_minutes" />
+                            <t t-set="displayed_names" t-value="displayed_names + [name]" />
+                        </t>
+                    </t>
+                </span>
+                <span>
+                    <t t-set="displayed_names" t-value="[]" />
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-set="name" t-value="doc.employee_id.name" />
+                        <t t-if="not name in displayed_names">
+                            <t t-esc="doc.total_early_minutes" />
+                            <t t-set="displayed_names" t-value="displayed_names + [name]" />
+                        </t>
+                    </t>
+                </span>
+                <br></br>
+                <span style="margin-right:45px">Số lần</span>
+                <span style="margin: 0 75px">
+                    <t t-set="displayed_names" t-value="[]" />
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-set="name" t-value="doc.employee_id.name" />
+                        <t t-if="not name in displayed_names">
+                            <t t-esc="doc.total_late_count" />
+                            <t t-set="displayed_names" t-value="displayed_names + [name]" />
+                        </t>
+                    </t>
+                </span>
+                <span>
+                    <t t-set="displayed_names" t-value="[]" />
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-set="name" t-value="doc.employee_id.name" />
+                        <t t-if="not name in displayed_names">
+                            <t t-esc="doc.total_early_count" />
+                            <t t-set="displayed_names" t-value="displayed_names + [name]" />
+                        </t>
+                    </t>
+                </span>
+            </div>
+
+            <style>
+                .content{
+                margin-top:20px;
+                }
+                #customers {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                margin-top:20px;
+                }
+
+                #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+                }
+
+                #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+                #customers tr:hover {background-color: #ddd;}
+
+                #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #04AA6D;
+                color: white;
+                text-align:center;
+                }
+                td,th{
+                    text-align:center;
+                }
+            </style>
+        </main>
+    </template>
+</odoo>

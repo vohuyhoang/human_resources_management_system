@@ -1,0 +1,14 @@
+
+<odoo>
+    <data>
+         <report
+        id="hr_attendance_report_template"
+        string="My PDF Report"
+        model="hr.attendance"
+        report_type="qweb-pdf"
+        name="attendance.hr_attendance_report_templates"
+        file="attendance.hr_attendance_report_templates"
+    
+         />
+    </data>
+</odoo>

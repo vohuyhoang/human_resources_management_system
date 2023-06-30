@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <record id="view_attendance_tree" model="ir.ui.view">
+                <field name="name">hr.attendance.tree</field>
+                <field name="model">hr.attendance</field>
+                <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+                <field name="arch" type="xml">
+                     <xpath expr="//field[@name='check_out']" position="after">
+                            <field name="late_minutes"/>
+                            <field name="early_minutes"/>
+                            <!-- <field name="day_of_week"/> -->
+                            <!-- <field name="late_count"/>
+                            <field name="early_count"/> -->
+                            <field name="total_late_count"/>
+                            <field name="total_early_count"/>
+                            <field name="total_late_minutes"/>
+                            <field name="total_early_minutes"/>
+                            
+                     </xpath>
+
+                </field>
+        </record>
+
+        <record id="attendance_action" model="ir.actions.act_window">
+            <field name="name">attendance</field>
+            <field name="res_model">hr.attendance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="attendance_app_menu" name="Attendance neww" sequence="300"/>
+        <menuitem id="attendance_menu" name="Attendance" action="attendance_action" parent="attendance_app_menu" sequence="100"/>
+    </data>
+</odoo>
