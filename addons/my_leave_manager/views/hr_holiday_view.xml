@@ -24,6 +24,18 @@
         <field name="active">False</field>
     </record>
 
+    <!-- <record id="view_hr_leave_form_inherit" model="ir.ui.view">
+    <field name="name">hr.leave.form.inherit</field>
+    <field name="model">hr.leave</field>
+    <field name="inherit_id" ref="hr_holidays.hr_leave_view_form_manager"/>
+    <field name="groups_id" eval="[(6, 0, [ref('hr_holidays.group_hr_holidays_user'), ref('hr_holidays.group_hr_holidays_manager')])]"/>
+    <field name="groups">hr_holidays.group_hr_holidays_user</field>
+    <field name="arch" type="xml">
+        <xpath expr="//header/button[@name='action_confirm']" position="after">
+            <button name="custom_button_office" string="Xác nhận" type="object" class="oe_highlight" groups="hr_holidays.group_hr_holidays_user" attrs="{'invisible': ['|', ('state', '!=', 'confirm')]}" modifiers="{'invisible': ['|', ('state', '!=', 'confirm')]}" options="{}"/>
+        </xpath>
+    </field>
+    </record> -->
 
     <report
         id="report_mypdf"
@@ -152,11 +164,20 @@
                     'leave': {
                         '_HEAD_': {
                             'B2': '${env.user.company_id.partner_id.name}#{style=text}',
+                            'G6': 'name${value or "none"}#{style=text}',
+                            'H6': 'duration_display${value or "none"}#{style=text}',
+                            'I6': 'date_from${value or "none"}#{style=text}',
+                            'J6': 'date_to${value or "none"}#{style=text}',
+                            'L6': 'state${value or "none"}#{style=text}',
                         },
-                        'linked_request_ids': {
-                            'C6': 'employee_id${value or "test"}#{style=text}',
-                            'D6': 'employee_id.name${value or ""}#{style=text}',
-                        }
+                        'employee_id': {
+                            'D6': 'name${value or ""}#{style=text}',
+                            'E6': 'job_id.name${value or ""}#{style=text}',
+                            'F6': 'department_id.name${value or ""}#{style=text}',
+                        },
+                        'holiday_status_id': {
+                            'K6': 'name${value or "test"}#{style=text}'
+                        },
                     }
                 },
             }
@@ -164,7 +185,7 @@
     </record>
 
     <function model="xlsx.template" name="load_xlsx_template">
-        <value eval="[ref('report_leave_excel')]"/>
+        <value eval="[ref('report_leave_excel')]" />
     </function>
 
 
