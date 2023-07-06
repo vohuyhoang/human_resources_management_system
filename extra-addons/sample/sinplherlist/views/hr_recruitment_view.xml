@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_applicant_view_id_inherit_module_name" model="ir.ui.view">
+        <field name="name">hr.applicant.view.form.inherit</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='source_id']" position="after">
+                <field name="skills" />
+            </xpath>
+            
+        </field>
+    </record>
+    
+    
+    <report
+        id="report_mypdf"
+        string="Recrruitment Report"
+        model="hr.applicant"
+        report_type="qweb-pdf"
+        name="sinplherlist.hr_recruitment_report_mypdf"
+        file="sinplherlist.hr_recruitment_report_mypdf"
+        attachment_use="True"
+    />
+
+
+    <!-- Định nghĩa template cho báo cáo -->
+    <template id="hr_recruitment_report_mypdf">
+        <main>
+            <div class="header">
+                <!-- Định dạng và hiển thị logo -->
+                <div class="logo">
+                    <img src="/my_leave_manager/static/img/logo.png"
+                        style="width: 100px; height: auto;" alt="Logo" />
+                </div>
+                <!-- Hiển thị tiêu đề -->
+                <div class="title" style="text-align: center;font-family: Arial, Helvetica, sans-serif;">
+                    <h1>THỐNG KÊ TUYỂN DỤNG THEO KÊNH</h1>
+                </div>
+            </div>
+            <div class="content">
+                <!-- Hiển thị bảng dữ liệu -->
+                <table id="customers">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Kênh tuyển dụng</th>
+                            <th>Vị trí đăng tuyển</th>
+                            <th>Số lượng hồ sơ nộp</th>
+                            <th>Số lượng ứng viên tham gia phỏng vấn </th>
+                            <th>Số lượng ứng viên đạt yêu cầu</th>
+                            <th>Số lượng nhận việc</th>
+                            <th>Số lượng kí hợp đồng chính thức</th>
+                            <th>Tỉ lệ chuyển đổi</th>
+                            <th>Ghi chú</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="counter" t-value="1" />
+                        <t t-foreach="docs" t-as="doc">
+                            <tr>
+                                <td>
+                                    <t t-esc="counter" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.medium_id" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.job_id" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.submission_counts" />
+                                </td>                                   
+                                <td>
+                                    <span t-field="doc.interview_counts" />
+                                </td>  
+                                <td>
+                                    <span t-field="doc.interview_pass_counts" />
+                                </td>
+                                <td>
+                                    <span t-field="doc.hired_counts" />
+                                </td>                                    
+                                <!-- <td>
+                                    <span t-field="doc.official_contract_count" />
+                                </td>    -->
+ 
+                                <t t-set="counter" t-value="counter + 1" />
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+
+            <style>
+                #customers {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                }
+
+                #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+                }
+
+                #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+                #customers tr:hover {background-color: #ddd;}
+
+                #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #04AA6D;
+                color: white;
+                }
+            </style>
+        </main>
+
+    </template>
+
+</odoo>
