@@ -21,6 +21,8 @@
                 </field>
         </record>
 
+       
+    
         <record id="attendance_action" model="ir.actions.act_window">
             <field name="name">attendance</field>
             <field name="res_model">hr.attendance</field>
@@ -29,7 +31,9 @@
             <field name="context">{}</field>
         </record>
 
-        <menuitem id="attendance_app_menu" name="Attendance neww" sequence="300"/>
-        <menuitem id="attendance_menu" name="Attendance" action="attendance_action" parent="attendance_app_menu" sequence="100"/>
+        <!-- <menuitem id="attendance_app_menu" name="Attendance neww" sequence="300"/>
+        <menuitem id="attendance_menu" name="Attendance" action="attendance_action" parent="attendance_app_menu" sequence="100"/> -->
+
+
     </data>
 </odoo>

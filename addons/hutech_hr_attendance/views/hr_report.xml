@@ -6,8 +6,8 @@
         string="My PDF Report"
         model="hr.attendance"
         report_type="qweb-pdf"
-        name="attendance.hr_attendance_report_templates"
-        file="attendance.hr_attendance_report_templates"
+        name="hutech_hr_attendance.hr_attendance_report_templates"
+        file="hutech_hr_attendance.hr_attendance_report_templates"
     
          />
     </data>

@@ -4,7 +4,7 @@
             <div class="header">
                 <!-- Định dạng và hiển thị logo -->
                 <div class="logo">
-                    <img src="/attendance/static/description/logo.png"
+                    <img src="/hutech_hr_attendance/static/description/logo.png"
                         style="width: 100px; height: auto;" alt="Logo" />
                 </div>
                 <!-- Hiển thị tiêu đề -->
@@ -36,7 +36,7 @@
                         <t t-set="displayed_departments"
                             t-value="displayed_departments + [department_name]" />
                     </t>
-                </t>
+                </t>     
 
                 <br></br>
                 <span>Chức vụ:</span>
@@ -85,21 +85,6 @@
                                     <span t-field="doc.early_minutes" />
                                 </td>
 
-                                <!-- <td>
-                                                <t t-esc="doc.duration_display" />
-                                            </td>
-                                            <td>
-                                                <t t-esc="doc.date_from" />
-                                            </td>
-                                            <td>
-                                                <t t-esc="doc.date_to" />
-                                            </td>
-                                            <td>
-                                                <t t-esc="doc.holiday_status_id.name" />
-                                            </td>
-                                            <td>
-                                                <t t-esc="doc.state" />
-                                            </td> -->
 
                             </tr>
                         </t>
@@ -129,7 +114,7 @@
                     </t>
                 </span>
                 <br></br>
-                <span style="margin-right:45px">Số lần</span>
+                <span style="margin-right:90px">Số lần</span>
                 <span style="margin: 0 75px">
                     <t t-set="displayed_names" t-value="[]" />
                     <t t-foreach="docs" t-as="doc">
@@ -181,7 +166,7 @@
                 text-align:center;
                 }
                 td,th{
-                    text-align:center;
+                text-align:center;
                 }
             </style>
         </main>

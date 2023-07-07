@@ -7,7 +7,8 @@ _logger = logging.getLogger(__name__)
 
 
 class CustomHrAttendance(models.Model):
-    _inherit = "hr.attendance"
+    _name='hr.attendance'
+    _inherit = ['hr.attendance']
 
 
     late_minutes = fields.Integer(
@@ -59,12 +60,14 @@ class CustomHrAttendance(models.Model):
 
 
     total_late_minutes = fields.Integer(string='Total Late Minutes', compute='_compute_total_late_minutes')
-    total_early_minutes = fields.Integer(string='Total Early Minutes', compute='_compute_total_early_minutes')
-
+    
     @api.depends('employee_id.attendance_ids.late_minutes')
     def _compute_total_late_minutes(self):
         for record in self:
             record.total_late_minutes = sum(record.employee_id.attendance_ids.mapped('late_minutes'))
+
+
+    total_early_minutes = fields.Integer(string='Total Early Minutes', compute='_compute_total_early_minutes')
 
     @api.depends('employee_id.attendance_ids.early_minutes')
     def _compute_total_early_minutes(self):
@@ -81,30 +84,19 @@ class CustomHrAttendance(models.Model):
                     check_in_date = fields.Datetime.from_string(attendance.check_in)
                     day_of_week = calendar.day_name[check_in_date.weekday()]
                     attendance.day_of_week = day_of_week
-    # @api.depends('check_in')
-    # def _compute_day_of_week(self):
-    #     # Set the locale to Vietnamese
-    #     locale.setlocale(locale.LC_TIME, 'vi_VN.utf8')
-
-    #     for attendance in self:
-    #         if attendance.check_in:
-    #             check_in_date = fields.Datetime.from_string(attendance.check_in)
-    #             day_of_week = check_in_date.strftime('%A')  # %A: Full weekday name
-    #             attendance.day_of_week = day_of_week
-
+   
 
     late_count = fields.Integer(string='Late Count', compute='_compute_late_count')
-    early_count = fields.Integer(string='Early Count', compute='_compute_early_count')
-
-
+   
     def _compute_late_count(self):
         for attendance in self:
             attendance.late_count = 1 if attendance.late_minutes > 0 else 0
 
+    early_count = fields.Integer(string='Early Count', compute='_compute_early_count')
+
     def _compute_early_count(self):
         for attendance in self:
                 attendance.early_count = 1 if attendance.early_minutes > 0 else 0
-
 
     total_late_count = fields.Integer(string='Total Late Count', compute='_compute_total_late_count')
 
@@ -121,6 +113,7 @@ class CustomHrAttendance(models.Model):
         for record in self:
             record.total_early_count = sum(record.employee_id.attendance_ids.mapped('early_count'))
 
-    
+
+
+
    
-       # _logger.info("Thời gian trễ:", late_minutes, "phút")
