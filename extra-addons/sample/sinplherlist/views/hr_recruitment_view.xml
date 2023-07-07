@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="hr_applicant_view_id_inherit_module_name" model="ir.ui.view">
+    <!-- <record id="hr_applicant_view_id_inherit_module_name" model="ir.ui.view">
         <field name="name">hr.applicant.view.form.inherit</field>
         <field name="model">hr.applicant</field>
-        <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='source_id']" position="after">
-                <field name="skills" />
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="applicants" />
             </xpath>
-            
+
         </field>
-    </record>
-    
-    
+    </record> -->
+
+
     <report
         id="report_mypdf"
         string="Recrruitment Report"
@@ -34,7 +34,8 @@
                         style="width: 100px; height: auto;" alt="Logo" />
                 </div>
                 <!-- Hiển thị tiêu đề -->
-                <div class="title" style="text-align: center;font-family: Arial, Helvetica, sans-serif;">
+                <div class="title"
+                    style="text-align: center;font-family: Arial, Helvetica, sans-serif;">
                     <h1>THỐNG KÊ TUYỂN DỤNG THEO KÊNH</h1>
                 </div>
             </div>
@@ -51,42 +52,54 @@
                             <th>Số lượng ứng viên đạt yêu cầu</th>
                             <th>Số lượng nhận việc</th>
                             <th>Số lượng kí hợp đồng chính thức</th>
-                            <th>Tỉ lệ chuyển đổi</th>
-                            <th>Ghi chú</th>
+                            <!-- <th>Tỉ lệ chuyển đổi</th>
+                            <th>Ghi chú</th> -->
 
                         </tr>
                     </thead>
                     <tbody>
                         <t t-set="counter" t-value="1" />
+                        <t t-set="displayed_job" t-value="[]" />
                         <t t-foreach="docs" t-as="doc">
-                            <tr>
-                                <td>
-                                    <t t-esc="counter" />
-                                </td>
-                                <td>
-                                    <span t-field="doc.medium_id" />
-                                </td>
-                                <td>
-                                    <span t-field="doc.job_id" />
-                                </td>
-                                <td>
-                                    <span t-field="doc.submission_counts" />
-                                </td>                                   
-                                <td>
-                                    <span t-field="doc.interview_counts" />
-                                </td>  
-                                <td>
-                                    <span t-field="doc.interview_pass_counts" />
-                                </td>
-                                <td>
-                                    <span t-field="doc.hired_counts" />
-                                </td>                                    
-                                <!-- <td>
-                                    <span t-field="doc.official_contract_count" />
-                                </td>    -->
- 
-                                <t t-set="counter" t-value="counter + 1" />
-                            </tr>
+                            <t t-set="job_name" t-value="doc.job_id.name" />
+                            <t t-if="not job_name in displayed_job">
+                                <tr>
+                                    <td>
+                                        <t t-esc="counter" />
+                                    </td>
+                                    <td>
+                                        <span t-field="doc.medium_id" />
+                                    </td>
+
+
+                                    <td>
+                                        <span t-esc="job_name" />
+                                    </td>
+
+
+                                    <td>
+                                        <span t-field="doc.submission_counts" />
+                                    </td>
+
+                                    <td>
+                                        <span t-esc="doc.applicants" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc.prioritys"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc.applicantss"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc.applicantsss"/>
+                                    </td>
+                                    <!-- <td>
+                                        <span t-field="doc.description"/>
+                                    </td>                                     -->
+                                    <t t-set="counter" t-value="counter + 1" />
+                                </tr>
+                            </t>
+                            <t t-set="displayed_job" t-value="displayed_job + [job_name]" />
                         </t>
                     </tbody>
                 </table>
