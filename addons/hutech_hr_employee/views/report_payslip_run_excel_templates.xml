@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="report_employee_excel" model="xlsx.template">
+        <field name="res_model">hr.employee</field>
+        <field name="fname">Book1.xlsx</field>
+        <field name="name">employee Batch Template</field>
+        <field name="input_instruction">
+            { 
+                '__EXPORT__': {
+                    'NHANVIEN': {
+                        '_HEAD_': {
+                            'C4': '${env.user.company_id.partner_id.name}#{style=text}',
+                            'D7': 'name${value or ""}#{style=text}',
+                            'E7': 'birthday${value or ""}#{style=text}',
+                            'F7': 'certificate${value or ""}#{style=text}',
+                            'G7': 'study_field${value or ""}#{style=text}',
+                            'J7': 'additional_note${value or ""}#{style=text}',
+                        },
+                        'department_id':{
+                            'H7': 'name${value or ""}#{style=text}',
+
+                        },
+                        'medical_record_ids':{
+                            'I7': 'bhxh${value or ""}#{style=text}',
+                        },
+
+                    }
+                       
+                }
+            }
+        </field>
+    </record>
+
+    <function model="xlsx.template" name="load_xlsx_template">
+        <value eval="[ref('report_employee_excel')]"/>
+    </function>
+
+    
+
+        <!-- <report
+                id="action_report_employee"
+                model="hr.employee"
+                string="employee Batch"
+                report_type="qweb-pdf"
+                name="hutech_hr_employee.report_employee"
+                file="hutech_hr_employee.report_employee"
+                print_report_name="object.name"
+        /> -->
+
+        <report id="report_employee_excel"
+                model="hr.employee"
+                string="employee Batch execl"
+                report_type="excel"
+                name="Book1.xlsx"
+                file="hutech_hr_employee.report_employee_excel"
+                print_report_name="object.name"
+        />
+  </data>
+</odoo>
+  

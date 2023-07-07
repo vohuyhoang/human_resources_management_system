@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError, AccessError
 from odoo.modules.module import get_module_resource
 
 from openpyxl.styles import colors, Alignment, Border, Side, Font
+
 _logger = logging.getLogger(__name__)
 
 
@@ -32,9 +33,10 @@ class MedicalRecord(models.Model):
     treatment = fields.Text(string='Treatment', groups="hr.group_hr_user")
     bhxh = fields.Char(string='BHXH', groups="hr.group_hr_user")
 
+
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
-   
+
     relationship_ids = fields.One2many('hr.relationship', 'employee_id', string='Relationships', groups="hr.group_hr_user")
     medical_record_ids = fields.One2many('medical.record', 'employee_id', string='Medical Records', groups="hr.group_hr_user")
     labor_contract = fields.Binary(string='Labor Contract', groups="hr.group_hr_user")
@@ -45,15 +47,14 @@ class HrEmployee(models.Model):
     salary_adjustment_filename = fields.Char(string='Salary Adjustment Filename', groups="hr.group_hr_user")
     bhxh = fields.Char(string='BHXH')
     date_start = fields.Date('Start Date', help="Start date of the contract.")
-    # # date_start = fields.Date('Ngày bắt đầu làm việc')
-    # date_start = fields.Date(string='hr.Contract', help='Ngày bắt đầu làm việc')
 
-    # Override the existing view to add the relationship and medical record sections
     def _get_formview_id(self, access_uid=None):
         self.ensure_one()
         if self._context.get('family_information_view', False):
             return self.env.ref('your_module_name.view_employee_form_inherit').id
         return super(HrEmployee, self)._get_formview_id(access_uid)
+
+
 class EmployeeReport(models.Model):
     _name = 'employee.report'
     _description = 'Báo cáo nhân viên'
@@ -70,7 +71,6 @@ class EmployeeReport(models.Model):
     diagnosis = fields.Char('Số sổ BHXH')
     bhxh = fields.Char('BHXH')
     job_title = fields.Char('Chức Vụ')
-    # date_start  = fields.Date('hr.Contract','Ngày bắt đầu làm việc')
 
     def get_employee_data(self):
         employees = self.env['hr.employee'].search([])
@@ -85,19 +85,19 @@ class EmployeeReport(models.Model):
                 'diagnosis': employee.diagnosis,
                 'notes': employee.notes,
                 'job_title': employee.job_title.name,
-                # 'date_start': employee.date_start.name,
+
                 'date_start': employee.contract_id.date_start,
                 'BHXH': employee.BHXH.name,
             })
         return employee_data
+
+
 class XLSXStyles(models.AbstractModel):
-    _inherit = ['xlsx.styles']
+    _inherit = 'xlsx.styles'
 
     @api.model
     def get_openpyxl_styles(self):
         styles = super(XLSXStyles, self).get_openpyxl_styles()
         styles['align']['middle_vertical'] = Alignment(vertical='center')
         styles['font']['times_new_roman'] = Font(name="Times New Roman")
-        return styles    
-
-    
+        return styles

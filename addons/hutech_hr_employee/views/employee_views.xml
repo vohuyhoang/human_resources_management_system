@@ -1,10 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<record id="employee_report_action" model="ir.actions.report">
+    <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//page[@name='personal_information']" position="inside">
+                    <group string="Mối quan hệ của Nhân viên">
+                        <field name="relationship_ids" mode="tree,kanban">
+                            <tree editable="bottom">
+                                <field name="name" attrs="{'name': 'name'}" groups="hr.group_hr_user"/>
+                                <field name="relation_type" attrs="{'name': 'relation_type'}" groups="hr.group_hr_user"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Hồ sơ Y tế">
+                        <field name="medical_record_ids" widget="one2many_list">
+                            <tree>
+                                <field name="date" attrs="{'name': 'date'}"/>
+                                <field name="treatment" attrs="{'name': 'treatment'}" groups="hr.group_hr_user"/>
+                                <field name="diagnosis" attrs="{'name': 'diagnosis'}" groups="hr.group_hr_user"/>
+                                <field name="bhxh" attrs="{'name': 'BHXH'}" groups="hr.group_hr_user"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+                       
+                    <page name="personal_information" string="Private Information" groups="hr.group_hr_user">
+                        <group string="Thông tin liên quan thu nhập">     
+                        
+                                <!-- Thêm các trường liên quan đến lương vào giao diện biểu mẫu -->
+                                <field name="labor_contract" widget="binary" filename="labor_contract_filename"/>
+                                <field name="appendix_contract" widget="binary" filename="appendix_contract_filename"/>
+                                <field name="salary_adjustment" widget="binary" filename="salary_adjustment_filename"/>
+                            
+                       </group> 
+                    </page>
+            </data>
+        </field>
+    </record>
+
+    <record id="employee_report_action" model="ir.actions.report">
         <field name="name">Báo cáo nhân viên</field>
         <field name="model">hr.employee</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">my_employee.report_employee</field>
-        <field name="file">my_employee.report_employee</field>
+        <field name="report_name">hutech_hr_employee.report_employee</field>
+        <field name="file">hutech_hr_employee.report_employee</field>
     </record>
 
     <template id="report_employee">
@@ -48,8 +90,8 @@
         string="My PDF Report"
         model="hr.employee"
         report_type="qweb-pdf"
-        name="my_employee.report_employee"
-        file="my_employee.report_employee"
+        name="hutech_hr_employee.report_employee"
+        file="hutech_hr_employee.report_employee"
         attachment_use="True"
     />
 
@@ -60,12 +102,12 @@
         <field name="name">Employee List</field>
         <field name="model">hr.employee</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">my_employee.report_employee_list</field>
-        <field name="file">my_employee.report_employee_list</field>
+        <field name="report_name">hutech_hr_employee.report_employee_list</field>
+        <field name="file">hutech_hr_employee.report_employee_list</field>
         <field name="model">hr.employee,date_start</field>
 
         <field name="print_report_name">"Danh sách nhân viên"</field>
-        <field name="report_rml">my_employee.report_employee_list</field>
+        <field name="report_rml">hutech_hr_employee.report_employee_list</field>
         <field name="attachment_use">True</field>
     </record>
 
@@ -91,7 +133,7 @@
                                 <td><span t-esc="o.birthday"/></td>
                                 <td><span t-esc="o.department_id.name"/></td>
                                 <td><span t-esc="o.job_title"/></td>
-                                <td><span t-esc="o.contract.date_start"/></td>
+                                <td><span t-esc="o.date_start"/></td>
                             </tr>
                         </tbody>
                     </table>
@@ -107,8 +149,8 @@
         string="My PDF Report1"
         model="hr.employee"
         report_type="qweb-pdf"
-        name="my_employee.report_employee_list"
-        file="my_employee.report_employee_list"
+        name="hutech_hr_employee.report_employee_list"
+        file="hutech_hr_employee.report_employee_list"
         attachment_use="True"
     />
 </odoo>
