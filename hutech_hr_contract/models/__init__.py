@@ -1,0 +1,1 @@
+from . import hutech_hr_contract
