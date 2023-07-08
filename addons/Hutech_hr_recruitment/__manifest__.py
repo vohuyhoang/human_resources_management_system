@@ -1,5 +1,5 @@
 {
-    'name': 'New Recruitment',
+    'name': ' Hutech Hr Recruitment',
     'depends': ['hr_recruitment'],
     'data': [
         # 'security/ir.model.access.csv',

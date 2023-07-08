@@ -18,8 +18,8 @@
         string="Recrruitment Report"
         model="hr.applicant"
         report_type="qweb-pdf"
-        name="sinplherlist.hr_recruitment_report_mypdf"
-        file="sinplherlist.hr_recruitment_report_mypdf"
+        name="Hutech_hr_recruitment.hr_recruitment_report_mypdf"
+        file="Hutech_hr_recruitment.hr_recruitment_report_mypdf"
         attachment_use="True"
     />
 
