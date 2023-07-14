@@ -1,29 +1,29 @@
-#. module: hr_payroll_vn
+#. module: hutech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll_vn.hr_payslip_view_tree_inherit
 msgid "Basic Wage"
 msgstr "Lương cơ bản"
 
-#. module: hr_payroll_vn
+#. module: hutech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll_vn.hr_payslip_view_tree_inherit
 msgid "Net Wage"
 msgstr "Lương thực lãnh"
 
-#. module: hr_payroll_vn
+#. module: hutech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll_vn.hr_payslip_run_form_inherit
 msgid "Send PaySlips by Email"
 msgstr "Gửi các Phiếu lương qua Email"
 
-#. module: hr_payroll_vn
+#. module: hutech_hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll_vn.hr_payslip_view_form_inherit
 msgid "Send PaySlip by Email"
 msgstr "Gửi Phiếu lương qua Email"
 
-#. module: hr_payroll_vn
+#. module: hutech_hr_payroll
 #: model:ir.actions.report,name:hr_payroll_vn.report_payslip_run
 msgid "Payslips Batch (.pdf)"
 msgstr "Bảng lương (.pdf)"
 
-#. module: hr_payroll_vn
+#. module: hutech_hr_payroll
 #: model:ir.actions.report,name:hr_payroll_vn.report_payslip_run_excel
 msgid "Payslips Batch (.xlsx)"
 msgstr "Bảng lương (.xlsx)"

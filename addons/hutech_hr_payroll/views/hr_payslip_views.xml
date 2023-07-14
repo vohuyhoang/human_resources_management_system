@@ -6,14 +6,12 @@
         <field name="model">hr.payslip</field>
         <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
         <field name="arch" type="xml">
-
             <xpath expr="//field[@name='date_to']" position="after">
                 <field name="currency_id" invisible="1"/>
                 <field name="basic_wage" string="Basic Wage" widget="monetary"
                        options="{'currency_field': 'currency_id'}"/>
                 <field name="net_wage" string="Net Wage" widget="monetary" options="{'currency_field': 'currency_id'}"/>
             </xpath>
-
         </field>
     </record>
 
@@ -22,19 +20,17 @@
         <field name="model">hr.payslip</field>
         <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
         <field name="arch" type="xml">
-
             <xpath expr="//button[@name='compute_sheet']" position="after">
                 <button name="action_payslip_sent" string="Send PaySlip by Email" type="object"
                         attrs="{'invisible':['|', ('state', 'not in', ('done'))]}" class="oe_highlight"/>
             </xpath>
-
             <xpath expr="//sheet" position="after">
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
                     <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
                 </div>
             </xpath>
-
         </field>
     </record>
 

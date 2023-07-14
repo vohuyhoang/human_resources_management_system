@@ -1,13 +1,17 @@
 # -*- coding:utf-8 -*-
-
 from odoo import api, fields, models, tools, _
+from odoo.exceptions import UserError, ValidationError
+
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class HrPayslip(models.Model):
     _name = 'hr.payslip'
-    _inherit = ['hr.payslip', 'mail.thread']
+    _inherit = ['hr.payslip', 'mail.thread', 'mail.activity.mixin']
 
-    currency_id = fields.Many2one(related='contract_id.currency_id')
+    currency_id = fields.Many2one(string="Currency", related='contract_id.currency_id')
     basic_wage = fields.Monetary(compute='_compute_basic_net')
     net_wage = fields.Monetary(compute='_compute_basic_net')
 
@@ -22,8 +26,10 @@ class HrPayslip(models.Model):
 
     @api.multi
     def action_payslip_sent(self):
+        if self.filtered(lambda inv: inv.state != 'done'):
+            raise UserError(_("Cannot send a payslip that is not done."))
         self.ensure_one()
-        template = self.env.ref('hr_payroll_vn.email_template_edi_payslip', False)
+        template = self.env.ref('hutech_hr_payroll.email_template_edi_payslip', False)
         compose_form = self.env.ref('mail.email_compose_message_wizard_form', False)
         ctx = dict(
             default_model='hr.payslip',

@@ -7,8 +7,8 @@
                 model="hr.payslip.run"
                 string="Payslips Batch (.pdf)"
                 report_type="qweb-pdf"
-                name="hr_payroll_vn.report_payslip_run"
-                file="hr_payroll_vn.report_payslip_run"
+                name="hutech_hr_payroll.report_payslip_run"
+                file="hutech_hr_payroll.report_payslip_run"
                 print_report_name="object.name"
         />
 
@@ -17,7 +17,7 @@
                 string="Payslips Batch (.xlsx)"
                 report_type="excel"
                 name="payslip_run_form.xlsx"
-                file="hr_payroll_vn.report_payslip_run_excel"
+                file="hutech_hr_payroll.report_payslip_run_excel"
                 print_report_name="object.name"
         />
 
